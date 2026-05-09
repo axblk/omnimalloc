@@ -1,10 +1,10 @@
 [build-system]
-requires = ["scikit-build-core>=0.11", "nanobind>=2.0"]
+requires = ["scikit-build-core>=0.11", "nanobind>=2.0", "setuptools-scm>=8"]
 build-backend = "scikit_build_core.build"
 
 [project]
 name = "omnimalloc"
-version = "0.3.0" # Also update CMakeLists.txt
+dynamic = ["version"]
 description = "Your one-stop shop for static memory allocation."
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
@@ -64,6 +64,13 @@ cmake.build-type = "Release"                         # TODO(fpedd): Cross-check 
 build-dir = "build/{wheel_tag}"
 sdist.include = ["src/cpp/**"]
 sdist.exclude = [".github", "notebooks", "external"]
+
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.setuptools_scm"
+
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
+local_scheme = "dirty-tag"
 
 [tool.cibuildwheel]
 build = "cp310-* cp311-* cp312-* cp313-*"
