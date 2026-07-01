@@ -26,10 +26,12 @@ execute_process(
   OUTPUT_VARIABLE nanobind_ROOT)
 find_package(nanobind CONFIG REQUIRED)
 
-nanobind_add_module(_cpp NB_STATIC src/cpp/allocators/greedy.cpp
-                    src/cpp/primitives/allocation.cpp src/cpp/bindings.cpp)
+nanobind_add_module(
+  _cpp NB_STATIC src/cpp/allocators/greedy.cpp
+  src/cpp/allocators/supermalloc/partition.cpp
+  src/cpp/primitives/allocation.cpp src/cpp/bindings.cpp)
 
-target_include_directories(_cpp PRIVATE src/cpp)
+target_include_directories(_cpp PRIVATE src/cpp src/cpp/allocators)
 
 if(ENABLE_CLANG_TIDY)
   set_target_properties(_cpp PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_PROGRAM}")
